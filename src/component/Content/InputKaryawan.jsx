@@ -22,11 +22,8 @@ import {
 	MDBBtn
  } from "mdbreact";
 
-export default function InputKaryawan() {
-	let karyawan = [];
-	if (localStorage.karyawan) {
-		karyawan = JSON.parse(localStorage.karyawan);
-	}
+export default function InputKaryawan(props) {
+	const [karyawan,setKaryawan] = props.karyawan;
 	const handleSubmit = ( e ) => {
 		e.preventDefault();
 		const data = {
@@ -47,8 +44,7 @@ export default function InputKaryawan() {
 		}else if (data.jenis_kelamin === "") {
 			alert("Jenis Kelamin Tidak Boleh kosong");
 		}else{
-			karyawan = [...karyawan,data];
-			localStorage.setItem("karyawan",JSON.stringify(karyawan));
+			setKaryawan([...karyawan,data])
 			alert("Berhasil Menambahkan Karyawan");
 			e.target.first_name.value = "";
 			e.target.last_name.value = "";

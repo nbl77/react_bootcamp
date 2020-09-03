@@ -14,8 +14,8 @@ import {
 	MDBSelect,
 	MDBBtn
  } from "mdbreact";
-export default function InputDivisi() {
-	let divisi = localStorage.divisi ? JSON.parse(localStorage.divisi) : [];
+export default function InputDivisi(props,{match}) {
+	const [divisi,setDivisi] = props.divisi;
 	const handleSubmit = (e) =>{
 		e.preventDefault();
 		const data = {
@@ -26,8 +26,7 @@ export default function InputDivisi() {
 			alert("Divisi Tidak Boleh Kosong");
 			return;
 		}else {
-			divisi = [...divisi, data];
-			localStorage.setItem("divisi",JSON.stringify(divisi));
+			setDivisi([...divisi, data]);
 			alert("Berhasil Menambahkan Divisi");
 			e.target.divisi.value = "";
 		}

@@ -31,49 +31,38 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 
 function App() {
-	const [status,setStatus] = useState(false);
-	useEffect(()=>{
-		const login = localStorage.login;
-		if (login) {
-			setStatus(true);
-		}
-	})
+	const [karyawan,setKaryawan] = useState([]);
+	const [divisi,setDivisi] = useState([]);
+	const [login,setLogin] = useState({status:false});
+	const [isLogin,setIsLogin] = useState(false);
+	const [penempatan,setPenempatan] = useState([]);
 	return (
 		<div>
 			<Router>
 				<Switch>
-					<AuthProvide>
-						<Wrap />
-					</AuthProvide>
+					<Wrap login={[login,setLogin]} karyawan={[karyawan,setKaryawan]} divisi={[divisi,setDivisi]} penempatan={[penempatan,setPenempatan]} />
 				</Switch>
 			</Router>
 		</div>
 	)
 }
-function Login() {
-	return(
-		<>
-			<LoginForm />
-		</>
-	)
-}
-function Wrap() {
-	const [status,setStatus] = useContext(AuthContext);
-	return status ? <AuthMenu /> : <Login />;
-
-}
-
-function AuthMenu({match}) {
-	return(
-		<>
-		<Header>
-			<Nav />
-		</Header>
-		<Route path='/logout' component={Logout} />
-		<Content />
-		<Footer />
-		</>
-	)
+function Wrap(props) {
+	const [login,setLogin] = props.login;
+	if (login.status) {
+		return(
+			<div>
+			<Header>
+				<Nav login={props.login} />
+			</Header>
+			<Route path='/logout' >
+				<Logout login={props.login} />
+			</Route>
+			<Content login={props.login} karyawan={props.karyawan} divisi={props.divisi} penempatan={props.penempatan} />
+			<Footer />
+			</div>
+		)
+	}
+	return <LoginForm login={props.login} karyawan={props.karyawan} />;
 }
 
 export default App;

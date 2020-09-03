@@ -1,16 +1,11 @@
-import React, {
-	useState
-} from 'react';
+import React from 'react';
 import {
 	MDBTable,
 	MDBTableBody,
-	MDBTableHead,
-	MDBIcon
+	MDBTableHead
 } from 'mdbreact';
-export default function ListDivis() {
-	let divisi = localStorage.divisi ? JSON.parse(localStorage.divisi) : [];
-	let karyawan = localStorage.karyawan ? JSON.parse(localStorage.karyawan) : [];
-	let penempatan = localStorage.penempatan ? JSON.parse(localStorage.penempatan) : [];
+export default function ListDivis(props) {
+	const [divisi,setDivisi] = props.divisi;
 	return (
 		<div className='container'>
 			<h3>List Divisi :</h3>

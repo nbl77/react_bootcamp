@@ -1,8 +1,4 @@
-import React, {
-	useState,
-	useContext,
-	useEffect
-} from 'react';
+import React from 'react';
 
 import {
 	Route,
@@ -22,18 +18,17 @@ import {
 	MDBContainer
 } from 'mdbreact'
 
-function Content() {
-	const login  = JSON.parse(localStorage.login);
+function Content(props) {
+	const [login,setLogin]  = props.login;
 	return (
-		<Switch>
+		<>
 			<MDBContainer className="text-center mt-5 pt-5">
-				{login.type === "karyawan" ? <KaryawanView /> : <HRDview />}
+				{login.type === "karyawan" ? <KaryawanView karyawan={props.karyawan} divisi={props.divisi} penempatan={props.penempatan} login={props.login} /> : <HRDview karyawan={props.karyawan} divisi={props.divisi} penempatan={props.penempatan} />}
 				<Route path='/login' >
 					<Redirect to='/' />
 				</Route>
       </MDBContainer>
-
-		</Switch>
+		</>
 	);
 
 }
@@ -42,11 +37,13 @@ function NoMatch() {
 		<h1>not foound</h1>
 	)
 }
-function KaryawanView() {
-	const login  = JSON.parse(localStorage.login);
+function KaryawanView(props) {
+	const [login,setLogin]  = props.login;
 	return(
 		<Switch>
-			<Route path='/single/:id' exact component={SingleCV} />
+			<Route path='/single/:id' exact >
+				<SingleCV karyawan={props.karyawan} divisi={props.divisi} penempatan={props.penempatan} />
+			</Route>
 			<Route path='/' exact>
 				<Redirect to={`/single/${login.id}`} />
 			</Route>
@@ -54,17 +51,29 @@ function KaryawanView() {
 		</Switch>
 	)
 }
-function HRDview() {
+function HRDview(props) {
 	return(
 		<Switch>
 			<Route path='/' exact component={Home} />
-			<Route path='/input_karyawan' exact component={InputKaryawan} />
-			<Route path='/input_divisi' exact component={InputDivisi} />
-			<Route path='/list_karyawan' exact component={ListKaryawan} />
-			<Route path='/list_divisi' exact component={ListDivisi} />
-			<Route path='/penempatan_divisi' exact component={PenempatanDiv} />
+			<Route path='/input_karyawan' exact >
+				<InputKaryawan karyawan={props.karyawan}/>
+			</Route>
+			<Route path='/input_divisi' exact>
+				<InputDivisi divisi={props.divisi} />
+			</Route>
+			<Route path='/list_karyawan' exact>
+				<ListKaryawan karyawan={props.karyawan} />
+			</Route>
+			<Route path='/list_divisi' exact>
+				<ListDivisi divisi={props.divisi} />
+			</Route>
+			<Route path='/penempatan_divisi'exact>
+				<PenempatanDiv penempatan={props.penempatan} karyawan={props.karyawan} divisi={props.divisi}  />
+			</Route>
 			<Route path='/list_cv' exact component={ListCV} />
-			<Route path='/single/:id' exact component={SingleCV} />
+			<Route path='/single/:id' exact>
+				<SingleCV penempatan={props.penempatan} karyawan={props.karyawan} divisi={props.divisi} />
+			</Route>
 			<Route path='/login' exact >
 				<Redirect to='/' />
 			</Route>

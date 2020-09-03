@@ -1,24 +1,21 @@
-import React, {
-	useState
-} from 'react';
+import React from 'react';
+import {useParams} from 'react-router';
 import {
-	MDBContainer,
-	MDBRow,
-	MDBCol,
-	MDBCard,
-	MDBCardBody,
-	MDBCardImage,
-	MDBCardTitle,
-	MDBCardText,
-	MDBInput,
-	MDBSelect,
-	MDBBtn
+	MDBContainer
  } from "mdbreact";
-export default function SingleCV({match}) {
-	const id = parseInt(match.params.id);
-	const penempatan = localStorage.penempatan ? JSON.parse(localStorage.penempatan).filter(item=>item.karyawan==id) : [];
-	const divisi = penempatan.length > 0 ? JSON.parse(localStorage.divisi).filter(item=> item.id_divisi == parseInt(penempatan[0].divisi)) : [];
-	const karyawan = JSON.parse(localStorage.karyawan).filter(item=>item.id_karyawan==id)[0];
+export default function SingleCV(props) {
+	let {id} = useParams();
+	id = parseInt(id);
+
+	let [penempatan,setPenempatan] = props.penempatan;
+	penempatan = penempatan ? penempatan.filter(item=>item.karyawan===id) : [];
+
+	let [divisi,setDivisi] = props.divisi;
+	divisi = divisi.length > 0 ? divisi.filter(item=> item.id_divisi === parseInt(penempatan[0].divisi)) : [];
+
+	let [karyawan,setKaryawan] = props.karyawan;
+	karyawan = karyawan.filter(item=>item.id_karyawan===id)[0];
+
 	if (!karyawan) {
 		return(
 			<MDBContainer style={{textAlign:"left"}}>

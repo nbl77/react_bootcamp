@@ -1,6 +1,4 @@
-import React, {
-	useEffect
-} from 'react';
+import React from 'react';
 import {
 	MDBTable,
 	MDBTableBody,
@@ -8,8 +6,8 @@ import {
 	MDBIcon
 } from 'mdbreact';
 import {Link} from 'react-router-dom';
-export default function ListKaryawan() {
-	const karyawan = localStorage.karyawan ? JSON.parse(localStorage.karyawan) : [];
+export default function ListKaryawan(props) {
+	const [karyawan,setKaryawan] = props.karyawan;
 	return (
 		<div className='container'>
 			<h3>List Karyawan :</h3>

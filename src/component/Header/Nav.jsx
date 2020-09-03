@@ -4,9 +4,6 @@ import React,{
 	createContext
 } from 'react';
 import {
-	Link
-} from 'react-router-dom';
-import {
 	MDBNavbar,
 	MDBNavbarBrand,
 	MDBNavbarToggler,
@@ -19,15 +16,16 @@ import {
 
 const NavContext = createContext();
 
-function Nav() {
+function Nav(props) {
 	const[nav,setNav] = useState('home');
-	const login = JSON.parse(localStorage.login);
+	const [login,setLogin] = props.login;
 	const [collapse,setCollapse] = useState(false);
 	const onClick = ()=> {
 		setCollapse(!collapse);
 	}
 	const bgBlue = {backgroundColor: '#37A5E8'}
 	return (
+		<>
 		<NavContext.Provider value={[nav,setNav]}>
 			<MDBNavbar style={bgBlue} dark expand="md" scrolling fixed="top">
 				<MDBContainer>
@@ -48,10 +46,10 @@ function Nav() {
 				</MDBContainer>
 			</MDBNavbar>
 		</NavContext.Provider>
+		</>
 	)
 }
 function HRDNav({match}) {
-	const[nav,setNav] = useContext(NavContext);
 	return (
 		<>
 		<MDBNavItem>

@@ -1,23 +1,13 @@
-import React, {
-	useState
-} from 'react';
+import React from 'react';
 import {
-	MDBContainer,
 	MDBRow,
 	MDBCol,
-	MDBCard,
-	MDBCardBody,
-	MDBCardImage,
-	MDBCardTitle,
-	MDBCardText,
-	MDBInput,
-	MDBSelect,
 	MDBBtn
  } from "mdbreact";
-export default function PenempatanDiv() {
-	let divisi = localStorage.divisi ? JSON.parse(localStorage.divisi) : [];
-	let karyawan = localStorage.karyawan ? JSON.parse(localStorage.karyawan) : [];
-	let penempatan = localStorage.penempatan ? JSON.parse(localStorage.penempatan) : [];
+export default function PenempatanDiv(props) {
+	const [divisi,setDivisi] = props.divisi;
+	const [karyawan,setKaryawan] = props.karyawan;
+	const [penempatan,setPenempatan] = props.penempatan;
 	const handleSubmit = (e) =>{
 		e.preventDefault();
 		const data = {
@@ -29,9 +19,7 @@ export default function PenempatanDiv() {
 		}else if (data.divisi === "") {
 			alert("Divisi Tidak Boleh kosong");
 		}else{
-			penempatan = [...penempatan,data];
-			console.log(penempatan);
-			localStorage.setItem("penempatan",JSON.stringify(penempatan));
+			setPenempatan([...penempatan,data]);
 			alert("Berhasil Menempatkan Karyawan");
 			e.target.karyawan.value = "";
 			e.target.divisi.value = "";
