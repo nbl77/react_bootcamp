@@ -10,13 +10,14 @@ Pembelian :
 9. Kasir memverifikasi nota pembelian, lalu dibuat laporan pembelian. 
 10. Laporan pembelian diberikan kepada admin untuk diverifikasi ulang. 
 11. Admin memberikan laporan pembelian yang sudah diverifikasi kepada pemimpin perusahaan
- ![tampilan home](https://github.com/nbl77/arkademy/blob/master/SS/6B.png)
+ ![gambar_uml_pembelian](https://github.com/nbl77/react_bootcamp/blob/analisis/UML_KASIR.jpg)
  
 Penjualan Umum : 
 1. Customer memberikan data barang kepada kasir, lalu kasir mengecek barang, apabila tidak ada diberikan kepada customer lagi. 
 2. Apabila barang tersedia kasir membuat nota penjualan 2 rangkap, satu diberikan kepada customer dan satu diarsipkan. 
 3. Kasir membuat laporan penjualan 2 rangkap, satu diarsipkan dan satu diberikan kepada admin untuk dicek ulang. 
 4. Admin memberikan laporan penjualan yang sudah diverifikasi kepada pemimpin perusahaan
+![gambar_uml_penjualan](https://github.com/nbl77/react_bootcamp/blob/analisis/UML_KASIR2.jpg)
  
 Retur Barang : 
 1. Customer memberikan nota penjualan kepada kasir. 
@@ -25,4 +26,4 @@ Retur Barang :
 4. Kemudian kasir membuat nota retur 2 rangkap, satu diberikan kepada customer, satu diarsipkan dan dibuatkan laporan retur barang. 
 5. Laporan retur barang diberikan kepada admin untuk dicek ulang. 
 6. Admin memberikan laporan retur barang yang sudah diverifikasi kepada pemimpin perusahaan.
- 
+![gambar_uml_retur](https://github.com/nbl77/react_bootcamp/blob/analisis/UML_KASIR3.jpg) 
