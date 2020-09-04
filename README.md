@@ -1,3 +1,5 @@
+# Aplikasi sistem kasir
+
 Pembelian : 
 1. Kasir mengecek persediaan barang kosong, lalu persediaan barang yang kosong. 
 2. Kemudian kasir membuat laporan persediaan stok barang. Laporan persediaan stok barang dirangkap 2, satu diarsipkan, dan satu diberikan kepada admin. 
