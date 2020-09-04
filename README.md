@@ -29,3 +29,6 @@ Retur Barang :
 5. Laporan retur barang diberikan kepada admin untuk dicek ulang. 
 6. Admin memberikan laporan retur barang yang sudah diverifikasi kepada pemimpin perusahaan.
 ![gambar_uml_retur](https://github.com/nbl77/react_bootcamp/blob/analisis/UML_KASIR3.jpg) 
+
+## DATABASE
+![db](https://github.com/nbl77/react_bootcamp/blob/analisis/erd.jpg)
