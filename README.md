@@ -10,6 +10,7 @@ Pembelian :
 9. Kasir memverifikasi nota pembelian, lalu dibuat laporan pembelian. 
 10. Laporan pembelian diberikan kepada admin untuk diverifikasi ulang. 
 11. Admin memberikan laporan pembelian yang sudah diverifikasi kepada pemimpin perusahaan
+ ![tampilan home](https://github.com/nbl77/arkademy/blob/master/SS/6B.png)
  
 Penjualan Umum : 
 1. Customer memberikan data barang kepada kasir, lalu kasir mengecek barang, apabila tidak ada diberikan kepada customer lagi. 
