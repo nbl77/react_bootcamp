@@ -17,9 +17,12 @@ import HRD from './HRD';
 import {
 	MDBContainer
 } from 'mdbreact'
+import {
+	useSelector
+} from 'react-redux';
 
-function Content(props) {
-	const [login,setLogin]  = props.login;
+function Content( props ) {
+	const login = useSelector( state => state.logged );
 	return (
 		<>
 			<MDBContainer className="text-center mt-5 pt-5">
@@ -27,19 +30,21 @@ function Content(props) {
 				<Route path='/login' >
 					<Redirect to='/' />
 				</Route>
-      </MDBContainer>
-		</>
+      </MDBContainer> <
+		/>
 	);
 
 }
+
 function NoMatch() {
-	return(
+	return (
 		<h1>not foound</h1>
 	)
 }
-function KaryawanView(props) {
-	const [login,setLogin]  = props.login;
-	return(
+
+function KaryawanView( props ) {
+	const login = useSelector( state => state.logged );
+	return (
 		<Switch>
 			<Route path='/single/:id' exact >
 				<SingleCV karyawan={props.karyawan} divisi={props.divisi} penempatan={props.penempatan} />
@@ -51,8 +56,9 @@ function KaryawanView(props) {
 		</Switch>
 	)
 }
-function HRDview(props) {
-	return(
+
+function HRDview( props ) {
+	return (
 		<Switch>
 			<Route path='/' exact component={Home} />
 			<Route path='/input_karyawan' exact >

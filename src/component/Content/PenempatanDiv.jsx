@@ -3,24 +3,33 @@ import {
 	MDBRow,
 	MDBCol,
 	MDBBtn
- } from "mdbreact";
-export default function PenempatanDiv(props) {
-	const [divisi,setDivisi] = props.divisi;
-	const [karyawan,setKaryawan] = props.karyawan;
-	const [penempatan,setPenempatan] = props.penempatan;
-	const handleSubmit = (e) =>{
+} from "mdbreact";
+import {
+	useSelector,
+	useDispatch
+} from 'react-redux';
+export default function PenempatanDiv( props ) {
+	const dispatch = useDispatch();
+	const divisi = useSelector( state => state.divisi );
+	const karyawan = useSelector( state => state.karyawan );
+	const penempatan = useSelector( state => state.assignment );
+	const addPenempatan = data => dispatch( {
+		type: "addAssign",
+		data: data
+	} );
+	const handleSubmit = ( e ) => {
 		e.preventDefault();
 		const data = {
-			karyawan:e.target.karyawan.value,
-			divisi:e.target.divisi.value
+			karyawan: e.target.karyawan.value,
+			divisi: e.target.divisi.value
 		}
-		if (data.karyawan === "") {
-			alert("Karyawan Tidak Boleh Kosong");
-		}else if (data.divisi === "") {
-			alert("Divisi Tidak Boleh kosong");
-		}else{
-			setPenempatan([...penempatan,data]);
-			alert("Berhasil Menempatkan Karyawan");
+		if ( data.karyawan === "" ) {
+			alert( "Karyawan Tidak Boleh Kosong" );
+		} else if ( data.divisi === "" ) {
+			alert( "Divisi Tidak Boleh kosong" );
+		} else {
+			addPenempatan( data );
+			alert( "Berhasil Menempatkan Karyawan" );
 			e.target.karyawan.value = "";
 			e.target.divisi.value = "";
 		}

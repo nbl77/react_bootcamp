@@ -1,15 +1,16 @@
 import React from 'react';
-import {Redirect,Link} from 'react-router-dom';
-
+import {
+	Redirect,
+	Link
+} from 'react-router-dom';
+import {
+	useSelector
+} from 'react-redux';
 export default function HRD() {
-	let status = false;
-	const login = localStorage.login;
-	if (login) {
-		status = true;
-	}
-	return(
-	<div>
-		{status ? null : <Redirect to='/login' />}
+	const login = useSelector( state => state.logged );
+	return (
+		<div>
+		{login.status ? null : <Redirect to='/login' />}
 		Selamat Datang Di Halaman HRD
 		<br/>
 		<Link to='/logout'>Logout</Link>

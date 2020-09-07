@@ -4,8 +4,11 @@ import {
 	MDBTableBody,
 	MDBTableHead
 } from 'mdbreact';
-export default function ListDivis(props) {
-	const [divisi,setDivisi] = props.divisi;
+import {
+	useSelector
+} from 'react-redux';
+export default function ListDivis( props ) {
+	const divisi = useSelector( state => state.divisi );
 	return (
 		<div className='container'>
 			<h3>List Divisi :</h3>

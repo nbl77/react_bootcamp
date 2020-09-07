@@ -1,4 +1,4 @@
-import React,{
+import React, {
 	useState,
 	useContext,
 	createContext
@@ -13,17 +13,21 @@ import {
 	MDBNavLink,
 	MDBContainer
 } from 'mdbreact';
-
+import {
+	useSelector
+} from 'react-redux';
 const NavContext = createContext();
 
-function Nav(props) {
-	const[nav,setNav] = useState('home');
-	const [login,setLogin] = props.login;
-	const [collapse,setCollapse] = useState(false);
-	const onClick = ()=> {
-		setCollapse(!collapse);
+function Nav( props ) {
+	const [ nav, setNav ] = useState( 'home' );
+	const login = useSelector( state => state.logged );
+	const [ collapse, setCollapse ] = useState( false );
+	const onClick = () => {
+		setCollapse( !collapse );
 	}
-	const bgBlue = {backgroundColor: '#37A5E8'}
+	const bgBlue = {
+		backgroundColor: '#37A5E8'
+	}
 	return (
 		<>
 		<NavContext.Provider value={[nav,setNav]}>
@@ -45,42 +49,46 @@ function Nav(props) {
 					</MDBCollapse>
 				</MDBContainer>
 			</MDBNavbar>
-		</NavContext.Provider>
-		</>
+		</NavContext.Provider> <
+		/>
 	)
 }
-function HRDNav({match}) {
+
+function HRDNav( {
+	match
+} ) {
 	return (
 		<>
 		<MDBNavItem>
 			<MDBNavLink to="/">Home</MDBNavLink>
-		</MDBNavItem>
-		<MDBNavItem>
-			<MDBNavLink to="/input_karyawan">Input Karyawan</MDBNavLink>
-		</MDBNavItem>
-		<MDBNavItem>
-			<MDBNavLink to="/list_karyawan">List Karyawan</MDBNavLink>
-		</MDBNavItem>
-		<MDBNavItem>
-			<MDBNavLink to="/input_divisi">Input Divisi</MDBNavLink>
-		</MDBNavItem>
-		<MDBNavItem>
-			<MDBNavLink to="/list_divisi">List Divisi</MDBNavLink>
-		</MDBNavItem>
-		<MDBNavItem>
-			<MDBNavLink to="/penempatan_divisi">Penempatan Divisi</MDBNavLink>
-		</MDBNavItem>
-		</>
+		</MDBNavItem> <
+		MDBNavItem >
+		<MDBNavLink to="/input_karyawan">Input Karyawan</MDBNavLink> <
+		/MDBNavItem> <
+		MDBNavItem >
+		<MDBNavLink to="/list_karyawan">List Karyawan</MDBNavLink> <
+		/MDBNavItem> <
+		MDBNavItem >
+		<MDBNavLink to="/input_divisi">Input Divisi</MDBNavLink> <
+		/MDBNavItem> <
+		MDBNavItem >
+		<MDBNavLink to="/list_divisi">List Divisi</MDBNavLink> <
+		/MDBNavItem> <
+		MDBNavItem >
+		<MDBNavLink to="/penempatan_divisi">Penempatan Divisi</MDBNavLink> <
+		/MDBNavItem> <
+		/>
 	)
 }
-function KaryawanNav(props) {
-	return(
+
+function KaryawanNav( props ) {
+	return (
 		<>
 
 		<MDBNavItem active>
 			<MDBNavLink to={`/single/${props.id}`}>Home</MDBNavLink>
-		</MDBNavItem>
-		</>
+		</MDBNavItem> <
+		/>
 	)
 }
 

@@ -20,14 +20,23 @@ import {
 	MDBInput,
 	MDBSelect,
 	MDBBtn
- } from "mdbreact";
+} from "mdbreact";
+import {
+	useDispatch,
+	useSelector
+} from 'react-redux';
 
-export default function InputKaryawan(props) {
-	const [karyawan,setKaryawan] = props.karyawan;
+export default function InputKaryawan( props ) {
+	const karyawan = useSelector( state => state.karyawan );
+	const dispatch = useDispatch();
+	const addKaryawan = data => dispatch( {
+		type: "addKaryawan",
+		data: data
+	} );
 	const handleSubmit = ( e ) => {
 		e.preventDefault();
 		const data = {
-			id_karyawan:Date.now(),
+			id_karyawan: Date.now(),
 			nama_depan: e.target.first_name.value,
 			nama_belakang: e.target.last_name.value,
 			nama: `${e.target.first_name.value} ${e.target.last_name.value}`,
@@ -37,15 +46,15 @@ export default function InputKaryawan(props) {
 			password: e.target.email.value,
 			alamat: e.target.alamat.value
 		}
-		if (data.nama === "") {
-			alert("Nama Tidak Boleh Kosong");
-		}else if (data.tgl_lahir === "") {
-			alert("Tanggal Lahir Tidak Boleh Kosong");
-		}else if (data.jenis_kelamin === "") {
-			alert("Jenis Kelamin Tidak Boleh kosong");
-		}else{
-			setKaryawan([...karyawan,data])
-			alert("Berhasil Menambahkan Karyawan");
+		if ( data.nama === "" ) {
+			alert( "Nama Tidak Boleh Kosong" );
+		} else if ( data.tgl_lahir === "" ) {
+			alert( "Tanggal Lahir Tidak Boleh Kosong" );
+		} else if ( data.jenis_kelamin === "" ) {
+			alert( "Jenis Kelamin Tidak Boleh kosong" );
+		} else {
+			addKaryawan( data );
+			alert( "Berhasil Menambahkan Karyawan" );
 			e.target.first_name.value = "";
 			e.target.last_name.value = "";
 			e.target.tgl_lahir.value = "";

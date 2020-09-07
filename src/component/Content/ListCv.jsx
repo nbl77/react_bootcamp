@@ -2,10 +2,15 @@ import React, {
 	useState
 } from 'react';
 
-import {Link} from 'react-router-dom';
+import {
+	Link
+} from 'react-router-dom';
+import {
+	useSelector
+} from 'react-redux';
 
 export default function ListCV() {
-	const karyawan = localStorage.karyawan ? JSON.parse(localStorage.karyawan) : [];
+	const karyawan = useSelector( state => state.karyawan );
 	return (
 		<div className='container'>
 			<ul>

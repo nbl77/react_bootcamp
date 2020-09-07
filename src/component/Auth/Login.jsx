@@ -1,10 +1,14 @@
 import React, {
 	useState,
-  useEffect,
-  useContext
+	useEffect,
+	useContext
 } from 'react';
-import {AuthContext} from '.';
-import {Redirect} from 'react-router-dom';
+import {
+	AuthContext
+} from '.';
+import {
+	Redirect
+} from 'react-router-dom';
 import {
 	MDBContainer,
 	MDBRow,
@@ -16,50 +20,57 @@ import {
 	MDBCardText,
 	MDBInput,
 	MDBBtn
- } from "mdbreact";
+} from "mdbreact";
+import {
+	useSelector,
+	useDispatch
+} from 'react-redux';
 
-
-export function LoginForm(props) {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [karyawan,setKaryawan] = props.karyawan;
-	const [login,setLogin] = props.login;
-	const handleChange = (e) =>{
-		if (e.target.name === "email") {
-			setEmail(e.target.value);
-		}else if (e.target.name === "password") {
-			setPassword(e.target.value);
+export function LoginForm( props ) {
+	const [ email, setEmail ] = useState( '' );
+	const [ password, setPassword ] = useState( '' );
+	const karyawan = useSelector( state => state.karyawan );
+	const login = useSelector( state => state.logged );
+	const dispatch = useDispatch();
+	const setLogin = status => dispatch( {
+		type: "SIGN",
+		data: status
+	} )
+	const handleChange = ( e ) => {
+		if ( e.target.name === "email" ) {
+			setEmail( e.target.value );
+		} else if ( e.target.name === "password" ) {
+			setPassword( e.target.value );
 		}
 	}
-	const handleSubmit = (e) =>{
+	const handleSubmit = ( e ) => {
 		e.preventDefault();
 		let type = "karyawan";
-		const stt = karyawan.some(item=>(item.email === email && item.password === password))
-		if (email.toLowerCase() === "hrd@email.com" && password.toLowerCase() === "hrd") {
+		const stt = karyawan.some( item => ( item.email === email && item.password === password ) )
+		if ( email.toLowerCase() === "hrd@email.com" && password.toLowerCase() === "hrd" ) {
 			type = "hrd";
 			const data = {
-				status:true,
-				email:email,
-				password:password,
-				type:type,
-				id:1
+				status: true,
+				email: email,
+				password: password,
+				type: type,
+				id: 1
 			}
-			setLogin(data);
-		}else if (stt) {
+			setLogin( data );
+		} else if ( stt ) {
 			const data = {
-				status:true,
-				email:email,
-				password:password,
-				type:type,
-				id:karyawan.filter(item=>(item.email === email && item.password === password))[0].id_karyawan
+				status: true,
+				email: email,
+				password: password,
+				type: type,
+				id: karyawan.filter( item => ( item.email === email && item.password === password ) )[ 0 ].id_karyawan
 			}
-			console.log(data);
-			setLogin(data);
-		}else {
-			alert("Email atau password yang anda masukan salah");
+			setLogin( data );
+		} else {
+			alert( "Email atau password yang anda masukan salah" );
 		}
 	}
-	return(
+	return (
 		<MDBContainer style={{marginTop:"30px"}}>
 			{login ? <Redirect to='/'/>: null}
 			<MDBRow className="justify-content-md-center">

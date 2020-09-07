@@ -25,17 +25,22 @@ import {
 	Route,
 	Switch,
 } from 'react-router-dom';
+import {
+	useSelector
+} from 'react-redux';
 import './assets/style.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 
 function App() {
-	const [karyawan,setKaryawan] = useState([]);
-	const [divisi,setDivisi] = useState([]);
-	const [login,setLogin] = useState({status:false});
-	const [isLogin,setIsLogin] = useState(false);
-	const [penempatan,setPenempatan] = useState([]);
+	const [ karyawan, setKaryawan ] = useState( [] );
+	const [ divisi, setDivisi ] = useState( [] );
+	const [ login, setLogin ] = useState( {
+		status: false
+	} );
+	const [ isLogin, setIsLogin ] = useState( false );
+	const [ penempatan, setPenempatan ] = useState( [] );
 	return (
 		<div>
 			<Router>
@@ -46,10 +51,11 @@ function App() {
 		</div>
 	)
 }
-function Wrap(props) {
-	const [login,setLogin] = props.login;
-	if (login.status) {
-		return(
+
+function Wrap( props ) {
+	const login = useSelector( state => state.logged );
+	if ( login.status ) {
+		return (
 			<div>
 			<Header>
 				<Nav login={props.login} />

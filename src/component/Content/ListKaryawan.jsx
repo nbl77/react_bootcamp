@@ -5,9 +5,14 @@ import {
 	MDBTableHead,
 	MDBIcon
 } from 'mdbreact';
-import {Link} from 'react-router-dom';
-export default function ListKaryawan(props) {
-	const [karyawan,setKaryawan] = props.karyawan;
+import {
+	useSelector
+} from 'react-redux';
+import {
+	Link
+} from 'react-router-dom';
+export default function ListKaryawan( props ) {
+	const karyawan = useSelector( state => state.karyawan );
 	return (
 		<div className='container'>
 			<h3>List Karyawan :</h3>
