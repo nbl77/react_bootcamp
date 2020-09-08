@@ -38,7 +38,7 @@ export default function Login( props ) {
 			alert( "Password atau username tidak boleh kosong" );
 		} else {
 			if ( username.toLowerCase() === "admin" && password.toLowerCase() === "admin" ) {
-				props.setIsLogin( true );
+				props.setIsLogin( "LOGIN" );
 			} else {
 				const res = props.data[ 0 ].map( item => {
 						if ( item.email === username && item.email === password ) {
@@ -48,7 +48,7 @@ export default function Login( props ) {
 					} )
 					.some( item => item.email === username && item.email === password )
 				if ( res ) {
-					props.setIsLogin( true );
+					props.setIsLogin( "LOGIN" );
 				} else {
 					alert( "Username atau Password yang anda masukan salah" );
 				}

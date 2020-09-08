@@ -41,7 +41,7 @@ function Register( props ) {
 		} else if ( !gitHub ) {
 			alert( "Github tidak boleh kosong" );
 		} else {
-			setData( [ ...data, dataStudent ] );
+			setData( "addStudent", dataStudent );
 			setNama( "" );
 			setQuotes( "" );
 			setProfile( "" );

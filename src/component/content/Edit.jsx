@@ -11,6 +11,9 @@ import {
 	MDBInput,
 	MDBBtn
 } from 'mdbreact';
+import {
+	useDispatch
+} from 'react-redux';
 import Form from './additional/Form';
 import {
 	useParams,
@@ -38,7 +41,7 @@ function Edit( props ) {
 			profile: profile,
 			email: email,
 			github: gitHub,
-			status: Student.status
+			status: Student.status ? Student.status : "logout"
 		}
 		if ( !nama ) {
 			alert( "Nama Tidak Boleh Kosong" );
@@ -58,8 +61,7 @@ function Edit( props ) {
 					return item;
 				}
 			} )
-			console.log( mainData );
-			setData( mainData );
+			setData( "editStudent", mainData );
 			setNama( "" );
 			setQuotes( "" );
 			setProfile( "" );

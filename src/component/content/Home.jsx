@@ -43,7 +43,7 @@ function Home( props ) {
 			{userLogin.length > 0 ? <h4><b>Selamat Datang "{userLogin[0].nama}"</b></h4> : ""}
 			<MDBRow>
 				{data.length < 1 ? <MDBCol md="12"><h1>No students</h1></MDBCol> : data.map((item, i)=>(
-					<MDBCol md="3" key={i}>
+					<MDBCol md="3" key={i} className="mt-3">
 						<MDBCard style={{minHeight:"550px",maxHeight:"550px"}}>
 							<MDBCardImage src={item.profile} width="100%" className="img-fluid" alt={item.nama} />
 							<MDBCardBody className="d-flex flex-column justify-content-around">

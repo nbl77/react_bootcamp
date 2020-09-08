@@ -10,6 +10,10 @@ import {
 	Switch,
 	Route
 } from 'react-router-dom';
+import {
+	useSelector,
+	useDispatch
+} from 'react-redux';
 
 function ContentMain( props ) {
 	const userLogin = props.data[ 0 ].filter( item => item.status === "login" )
@@ -40,7 +44,11 @@ function ContentMain( props ) {
 }
 
 function Logout( props ) {
-	const [ isLogin, setIsLogin ] = props.login;
+	const isLogin = useSelector( state => state.Logged );
+	const dispatch = useDispatch();
+	const setIsLogin = status => dispatch( {
+		type: status
+	} )
 	const [ data, setData ] = props.data;
 	const newData = data.map( item => {
 		if ( item.status === "login" ) {
@@ -48,7 +56,7 @@ function Logout( props ) {
 		}
 		return item;
 	} )
-	setIsLogin( false );
+	setIsLogin( "LOGOUT" );
 	return <Redirect to="/login" />
 }
 
