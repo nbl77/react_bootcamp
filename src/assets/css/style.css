@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Lobster&display=swap');
+*{
+  list-style: none;
+}
+body{
+  font-family: 'Lato', sans-serif;
+}
+.navbar-brand{
+  font-family: 'Lobster', cursive;
+}
+.color-main{
+  color: #ff5f40 !important;
+}
+.full-screen{
+  min-height: 100vh;
+  position: relative;
+}
+.bg-main{
+  background: #ff5f40 !important;
+  color: #fff !important;
+  border-color: #ff5f40 !important;
+}
+.bg-orange{
+  background: #ff5f40 !important;
+}
+.color-second{
+  color: #ffa36c !important;
+}
+.rotate-180{
+  transform: rotate(180deg);
+}
+.navbar .nav-item .nav-link{
+  margin-right: 40px;
+  font-size: 14px;
+}
+.nav-item.active>.nav-link{
+  background: transparent !important;
+  color: #ff5f40 !important;
+}
+.sign-in{
+  border-color: #ff5f40;
+  font-weight: normal;
+}
+.bg-dark{
+  background-color: #0a1014 !important;
+}
+/* .poster-3{
+  height: 325px !important;
+} */
+.poster:hover .infoPoster-3{
+  opacity: 1;
+}
+.poster .rating{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+}
+.infoPoster-3{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #eee;
+  background: linear-gradient(transparent, rgba(0,0,0,1));
+  padding: 5px;
+  opacity: 0;
+  transition: 0.4s;
+}
+.infoPoster-3 .infoTitle-3{
+  font-size: 18px;
+  font-weight: bold;
+}
+.infoPoster-3 p{
+  font-size: 14px;
+  color: #ddd;
+}
+.singlePage{
+  width: 100%;
+  height: 70vh;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+.singlePage::before{
+  content: "";
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 1;
+}
+.titleMovie{
+  font-size: 22px;
+}
+.payment{
+  padding-top: 100px;
+}
