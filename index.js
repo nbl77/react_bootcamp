@@ -6,6 +6,7 @@ import {
 	AppRegistry
 } from 'react-native';
 import App from './component';
+import LifeCycle from './tryLifeCycle';
 import {
 	name as appName
 } from './app.json';

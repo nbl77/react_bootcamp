@@ -28,6 +28,7 @@ import {
 import Home from './Home';
 import Login from './Login';
 import Detail from './Detail';
+import Photos from './Photos';
 const Stack = createStackNavigator();
 
 function App() {
@@ -47,10 +48,19 @@ function App() {
 		<NavigationContainer>
       <Stack.Navigator initialRouteName="login">
         <Stack.Screen name="home" options={({ route }) => (customHeader("Home"))} >
-					{(props)=>(<Home data={data} {...props} />)}
+					{(props)=>(<Home data={data} />)}
 				</Stack.Screen>
         <Stack.Screen name="login" component={Login} options={({ route }) => (customHeader("Sign In"))} />
-        <Stack.Screen name="detail" options={{headerShown:false}} children={(props)=>(<Detail data={data} {...props} />)} />
+				<Stack.Screen name="detail" options={{headerShown:false}} children={(props)=>(<Detail data={data} {...props} />)} />
+        <Stack.Screen name="photos" options={{
+						headerStyle:{
+							elevation: 0, // remove shadow on Android
+		          shadowOpacity: 0, // remove shadow on iOS
+						},
+						headerLeft: (props) => (
+							<Icon {...props} name="close-outline" fill="#888" style={{width: 25,height: 25,margin: 15,flex: 1}} />
+				    )
+					}} children={(props)=>(<Photos {...props} />)} />
       </Stack.Navigator>
     </NavigationContainer>
 	)
