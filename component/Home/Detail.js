@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { Layout, Text, Input, Button} from '@ui-kitten/components';
 import { Icon } from 'react-native-eva-icons';
-import style from './style';
+import style from './../Assets/style';
+import AuthContext from './../context/AuthContext';
 
 function Detail(props) {
   const [name, setName] = React.useState();
   const [id, setId] = React.useState();
   const [device, setDevice] = React.useState();
   const [profile, setProfile] = React.useState();
+
   const {type,dataItem} = props.route.params;
-  const [data,setData] = props.data;
+  const {data, addData, editData} = React.useContext(AuthContext);
+
   React.useEffect(()=>{
     if (type === "Edit") {
       setName(dataItem.name);
@@ -27,12 +30,11 @@ function Detail(props) {
         }
         return item
       })
-      setData(newState)
-      alert("Success");
+      editData(newState)
       return props.navigation.goBack()
     }else {
       const newData = {id:data.length+1,name,device,profile};
-      setData([...data,newData]);
+      addData(newData);
       alert("Success");
       return props.navigation.goBack()
     }

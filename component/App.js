@@ -1,68 +1,53 @@
+// Penggunaan Stack harus berada didalam komponen NavigationContainer
 import * as React from 'react';
+import {Text} from '@ui-kitten/components';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Dashboard from './Dashboard';
+import AuthContext from './context/AuthContext';
+import {Login, Signup} from './Auth';
 import {
-	StyleSheet,
-	ScrollView,
-	TouchableWithoutFeedback
-} from 'react-native';
-import {
-	Layout,
-	Text,
-	ViewPager,
-	Avatar,
-	Input,
-	Button,
-	CheckBox,
-	ListItem,
-	TopNavigation,
-	TopNavigationAction
-} from '@ui-kitten/components';
-import {
-	Icon
-} from 'react-native-eva-icons';
-import {
-	NavigationContainer
-} from '@react-navigation/native';
-import {
-	createStackNavigator
-} from '@react-navigation/stack';
-import Home from './Home';
-import Login from './Login';
-import Detail from './Detail';
-import Photos from './Photos';
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props) {
+	const {signOut} = React.useContext(AuthContext)
+  return (
+    <DrawerContentScrollView>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="Logout"
+				onPress={signOut}
+      />
+    </DrawerContentScrollView>
+  );
+}
 
 function App() {
-	const data = React.useState( [ {
-			id: 1,
-			name: "Nabil",
-			device: "Android",
-			profile: "https://cdn.idntimes.com/content-images/community/2019/11/pjq1cp9-b535648f0a940c15c61adeebab34c338.jpg"
-	},
-		{
-			id: 2,
-			name: "John",
-			device: "IOS",
-			profile: "https://cdn.idntimes.com/content-images/community/2019/12/5cbeb8f402a1f-56275801140a9f93af2e505b4348d03c_600x400.jpg"
-	} ] );
+	const {token,signOut} = React.useContext(AuthContext)
 	return (
 		<NavigationContainer>
-      <Stack.Navigator initialRouteName="login">
-        <Stack.Screen name="home" options={({ route }) => (customHeader("Home"))} >
-					{(props)=>(<Home data={data} />)}
-				</Stack.Screen>
-        <Stack.Screen name="login" component={Login} options={({ route }) => (customHeader("Sign In"))} />
-				<Stack.Screen name="detail" options={{headerShown:false}} children={(props)=>(<Detail data={data} {...props} />)} />
-        <Stack.Screen name="photos" options={{
-						headerStyle:{
-							elevation: 0, // remove shadow on Android
-		          shadowOpacity: 0, // remove shadow on iOS
-						},
-						headerLeft: (props) => (
-							<Icon {...props} name="close-outline" fill="#888" style={{width: 25,height: 25,margin: 15,flex: 1}} />
-				    )
-					}} children={(props)=>(<Photos {...props} />)} />
-      </Stack.Navigator>
-    </NavigationContainer>
+		{token === null ? ( //Jika belum login
+			<>
+				<Stack.Navigator>
+					<Stack.Screen name="login" component={Login} options={({ route }) => (customHeader("Sign In"))} />
+					<Stack.Screen name= "register" component = {Signup} options = {({route}) => ( customHeader( "Sign Up" ) ) } />
+				</Stack.Navigator >
+			</>
+		) : ( //Jika sudah login
+			<>
+				<Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawerContent {...props} />}>
+						<Drawer.Screen name="home" component={Dashboard} options={({ route }) => (customHeader("Dashboard"))} />
+	      </Drawer.Navigator>
+			</>
+		)}
+	</NavigationContainer>
+
 	)
 }
 
