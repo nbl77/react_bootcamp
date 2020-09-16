@@ -1,11 +1,23 @@
+import AsyncStorage from '@react-native-community/async-storage';
 const ActionStorage = ([state,dispatch]) =>(
   {
+    restore: async token => dispatch( {
+      type: "SIGN_IN",
+      token: token
+    } ),
     signIn: async data => {
       const isLogged = state.user.some(item=>{
-        if (item.email === data.email && item.password === data.password) {
-          return true
+        try {
+          AsyncStorage.setItem("token","Halo, belajar auth");
+          if (item.email === data.email && item.password === data.password) {
+            return true
+          }
+          return false;
+        } catch (e) {
+          console.log(e);
+          return false;
         }
-        return false;
+
       });
       if (isLogged) {
         dispatch( {
@@ -16,9 +28,16 @@ const ActionStorage = ([state,dispatch]) =>(
         alert("Email atau password yang anda masukan salah");
       }
     },
-    signOut: async () => dispatch( {
-      type: "SIGN_OUT"
-    } ),
+    signOut: async () => {
+      try {
+  			AsyncStorage.removeItem("token");
+        dispatch( {
+          type: "SIGN_OUT"
+        } )
+  		} catch (e) {
+  			console.log(e);
+  		}
+    },
     signUp: async data => {
       dispatch( {
         type: "SIGN_UP",

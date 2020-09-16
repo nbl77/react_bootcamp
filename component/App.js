@@ -1,35 +1,34 @@
 // Penggunaan Stack harus berada didalam komponen NavigationContainer
 import * as React from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import {Text} from '@ui-kitten/components';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Dashboard from './Dashboard';
+import Photos from './Albums/Photos';
+import Detail from './Home/Detail';
 import AuthContext from './context/AuthContext';
-import {Login, Signup} from './Auth';
 import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+	Icon
+} from 'react-native-eva-icons';
+import {Login, Signup} from './Auth';
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
-
-function CustomDrawerContent(props) {
-	const {signOut} = React.useContext(AuthContext)
-  return (
-    <DrawerContentScrollView>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="Logout"
-				onPress={signOut}
-      />
-    </DrawerContentScrollView>
-  );
-}
 
 function App() {
-	const {token,signOut} = React.useContext(AuthContext)
+	const {token,restore} = React.useContext(AuthContext)
+  React.useEffect(()=>{
+		const getToken = async ()=>{
+			try {
+				const token = await AsyncStorage.getItem("token")
+				if (token != null) {
+					restore(token)
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		getToken();
+  },[])
 	return (
 		<NavigationContainer>
 		{token === null ? ( //Jika belum login
@@ -41,9 +40,11 @@ function App() {
 			</>
 		) : ( //Jika sudah login
 			<>
-				<Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawerContent {...props} />}>
-						<Drawer.Screen name="home" component={Dashboard} options={({ route }) => (customHeader("Dashboard"))} />
-	      </Drawer.Navigator>
+				<Stack.Navigator>
+					<Stack.Screen name="home" component={Dashboard} options={({ route }) => (customHeader("Dashboard"))} />
+					<Stack.Screen name= "Photos" component = {Photos} options = {({route}) => ( subHeader() ) } />
+					<Stack.Screen name="Detail" options = {({route}) => ( customHeader( "Detail" ) ) } component={Detail} />
+				</Stack.Navigator >
 			</>
 		)}
 	</NavigationContainer>
@@ -64,5 +65,14 @@ const customHeader = title => {
 		headerShown: false
 	}
 }
+const subHeader = () =>({
+			headerStyle:{
+				elevation: 0, // remove shadow on Android
+				shadowOpacity: 0, // remove shadow on iOS
+			},
+			headerLeft: (props) => (
+				<Icon {...props} name="close-outline" fill="#888" style={{width: 25,height: 25,margin: 15,flex: 1}} />
+			)
+		})
 
 export default App;

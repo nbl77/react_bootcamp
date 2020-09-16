@@ -65,7 +65,7 @@ function Albums( props ) {
 						 borderBottomWidth: 1
 					 }
 				 }
-				 onPress = { _ => props.navigation.navigate( 'Photos', {	albumId: data.item.id } )}
+				 onPress = { () => props.navigation.navigate( 'Photos', {	albumId: data.item.id } )}
 
 				 />
 		 </Swipeable>

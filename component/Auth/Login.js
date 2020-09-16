@@ -50,7 +50,7 @@ function Login( {
 		}
 
 		// Sign IN
-		const handleSubmit = props => {
+		const handleSubmit =async  props => {
 			const data = {
 				email: username,
 				password: password

@@ -16,7 +16,6 @@ function Photos(props) {
   return(
     <ScrollView>
       <Layout style={{flex: 1}}>
-
         <Layout style={{marginTop: 20,marginHorizontal: 20}}>
         {photo.length > 0 ? photo.map((item,id)=>(
           <Image key={id} source={{uri:item.url}} style={{ width: "100%", height: 250,marginBottom: 20, borderRadius: 10}}/>

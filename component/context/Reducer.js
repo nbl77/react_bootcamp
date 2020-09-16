@@ -1,6 +1,8 @@
 import React from 'react';
 import AuthContext from './AuthContext';
 import ActionStorage from './ActionContext';
+
+
 const initialState = [ {
 	id: 1,
 	name: "Nabil",
@@ -24,10 +26,10 @@ function ReducersState ( state, action ){
 		};
 		break;
 		case "SIGN_IN":
-		return {
-			...state,
-			userToken : action.token
-		};
+			return {
+				...state,
+				userToken : action.token
+			};
 		break;
 		case "SIGN_UP":
 		return {
