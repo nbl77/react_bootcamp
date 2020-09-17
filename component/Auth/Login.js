@@ -17,7 +17,6 @@ import {
 } from 'react-native-eva-icons';
 import style from './../Assets/style';
 import AuthContext from './../context/AuthContext';
-
 function Login( {
 	navigation
 } ) {
@@ -48,7 +47,6 @@ function Login( {
 				setFocusInp( "" );
 			}
 		}
-
 		// Sign IN
 		const handleSubmit =async  props => {
 			const data = {

@@ -9,31 +9,28 @@ function Detail(props) {
   const [id, setId] = React.useState();
   const [device, setDevice] = React.useState();
   const [profile, setProfile] = React.useState();
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
 
   const {type,dataItem} = props.route.params;
   const {data, addData, editData} = React.useContext(AuthContext);
-
   React.useEffect(()=>{
     if (type === "Edit") {
       setName(dataItem.name);
       setDevice(dataItem.device);
       setProfile(dataItem.profile);
       setId(dataItem.id)
+      setEmail(dataItem.email)
+      setPassword(dataItem.password)
     }
   },[data])
   const submitBtn = _ =>{
     if (type === "Edit") {
-      const newData = {id,name,device,profile};
-      const newState = data.map(item=>{
-        if (item.id === id) {
-          return newData;
-        }
-        return item
-      })
-      editData(newState)
+      const newData = {id,name,device,profile,email,password};
+      editData(newData)
       return props.navigation.goBack()
     }else {
-      const newData = {id:data.length+1,name,device,profile};
+      const newData = {name,device,profile,email,password};
       addData(newData);
       alert("Success");
       return props.navigation.goBack()
@@ -51,6 +48,19 @@ function Detail(props) {
         style={style.formInput}
         value={name}
         onChangeText={val=>setName(val)}
+      />
+      <Input
+        placeholder='Insert email'
+        style={style.formInput}
+        value={email}
+        onChangeText={val=>setEmail(val)}
+      />
+      <Input
+        placeholder='Insert Password'
+        style={style.formInput}
+        value={password}
+        secureTextEntry={true}
+        onChangeText={val=>setPassword(val)}
       />
       <Input
         placeholder='Insert Device'

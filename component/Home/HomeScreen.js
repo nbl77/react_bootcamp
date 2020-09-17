@@ -15,7 +15,6 @@ import {
 function HomeScreen( props ) {
 	const {data, deleteData} = React.useContext( AuthContext );
 	const ItemImage = uri => <Avatar source={{uri:uri}} />
-
 	const DeleteAction = ( props, itemObj, dataArr ) => {
 	  Alert.alert(
 	    'Warning!',
@@ -29,14 +28,7 @@ function HomeScreen( props ) {
 	      {
 	        text: 'YES',
 	        onPress: () => {
-	          const newData = dataArr.filter( item => {
-	            if ( item.id === itemObj.id ) {
-	              alert( "Success Delete data" )
-	              return false;
-	            }
-	            return true
-	          } )
-	          deleteData( newData );
+	          deleteData( itemObj );
 	        }
 	      },
 	      ]
@@ -45,6 +37,23 @@ function HomeScreen( props ) {
 	const deleteBtn = ( props, item, data ) => (
 	  <Icon {...props} name="trash-2-outline" fill="#ec0101" onPress={_=>DeleteAction(props,item,data)} />
 	)
+	if (data[0] === 404) {
+		return (
+			<>
+			<TopNavigation
+				title={()=><Text style={{color: "#fff",fontWeight: 'bold',fontSize: 20}}>Home</Text>}
+				accessoryRight={()=>IconAdd(props.navigation)}
+				style={{backgroundColor:"#ff8e6e"}}
+			/>
+			<ListItem
+				title="Tidak Ada data"
+				description={`silahkan tambahkan beberapa data`}
+				style={{borderBottomColor: "#eee",borderBottomWidth: 1}}
+				/>
+			</>
+		)
+	}
+
 	return (
 		<ScrollView style={{backgroundColor: "#fff"}}>
 			<Layout>

@@ -21,24 +21,46 @@ import {
 	Icon
 } from 'react-native-eva-icons';
 import style from './../Assets/style';
+import AsyncStorage from '@react-native-community/async-storage';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 
 function Albums( props ) {
 	const [ albums, setAlbums ] = React.useState( [] );
+	const [ DataAlbums, setDataAlbums ] = React.useState( [] );
 	const [refresh, setRefresh] = React.useState(false);
 	const [statusSwipe, setStatusSwipe] = React.useState(false);
 	const [ limit, setLimit ] = React.useState( {
 		start: 0
 	} );
-	const totalPage = Math.ceil( albums.length / 10 );
+	const totalPage = Math.ceil( DataAlbums.length / 10 );
 	React.useEffect( () => {
-		fetch( `https://jsonplaceholder.typicode.com/albums?_start=${limit.start}&_limit=10` )
-			.then( res => res.json() )
-			.then( data => {
-				setAlbums( [...albums, ...data] )
-			} )
-			.catch( err => console.error( err ) )
-	},[limit] )
+		const fetchAlbums =  async ()=>{
+			try {
+				const dataAlbums = await AsyncStorage.getItem("albums");
+				if (dataAlbums === null) {
+					console.log("masuk");
+					const fetchRes = await fetch("https://jsonplaceholder.typicode.com/albums")
+					const data = await fetchRes.json()
+					await AsyncStorage.setItem("albums",JSON.stringify(data))
+					setDataAlbums(data)
+				}else {
+					setDataAlbums(JSON.parse(dataAlbums));
+				}
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		if (DataAlbums.length < 1) {
+			fetchAlbums();
+		}
+	},[DataAlbums] )
+	React.useEffect(()=>{
+		if (DataAlbums.length > 1) {
+			console.log("limit change");
+			const page = DataAlbums.slice(limit.start,limit.start+totalPage);
+			setAlbums([...albums, ...page])
+		}
+	},[limit,DataAlbums])
 	const SwipeOpen = (props) =>{
 		return (
 			<View style={{backgroundColor: '#ff8e6e',flex: 1,flexDirection: 'row', alignItems: 'center',paddingLeft: 20}}>
@@ -72,7 +94,7 @@ function Albums( props ) {
 				)
 	}
 	const reRenderItem = prpps =>{
-		console.log("reached");
+		console.log("onEndReached");
 		setLimit({
 			start:limit.start + 10
 		})
@@ -84,7 +106,7 @@ function Albums( props ) {
 			setLimit({
 				start:0
 			})
-			if (albums.length > 1) {
+			if (DataAlbums.length > 1) {
 				resolve(true)
 			}
 		}).then(_=>setRefresh(false))
@@ -97,7 +119,7 @@ return (
 		style={{backgroundColor:"#ff8e6e"}}
 		/>
 		</Layout>
-		{albums.length < 1 ? (<Text>Loading</Text>) : null}
+		{DataAlbums.length < 1 ? (<Text>Loading</Text>) : null}
 		<FlatList
 		data={albums}
 		renderItem={renderItem}

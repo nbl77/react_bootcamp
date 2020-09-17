@@ -9,13 +9,17 @@ import Photos from './Albums/Photos';
 import Detail from './Home/Detail';
 import AuthContext from './context/AuthContext';
 import {
+  getUsers
+} from './context/sqlQuery';
+import {
 	Icon
 } from 'react-native-eva-icons';
 import {Login, Signup} from './Auth';
 const Stack = createStackNavigator();
 
+
 function App() {
-	const {token,restore} = React.useContext(AuthContext)
+	const {token,restore, setUser,data} = React.useContext(AuthContext)
   React.useEffect(()=>{
 		const getToken = async ()=>{
 			try {
@@ -27,8 +31,19 @@ function App() {
 				console.log(e);
 			}
 		}
+		const setDataUser = async () =>{
+			try {
+				const data = await getUsers();
+				setUser(data)
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		if (data.length < 1) {
+			setDataUser();
+		}
 		getToken();
-  },[])
+  },[data])
 	return (
 		<NavigationContainer>
 		{token === null ? ( //Jika belum login

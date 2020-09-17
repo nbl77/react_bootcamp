@@ -3,6 +3,7 @@ import {Icon} from 'react-native-eva-icons';
 import {Alert} from 'react-native';
 import AuthContext from './../context/AuthContext';
 const DeleteAction = ( props, itemObj, dataArr ) => {
+  const {deleteData} = React.useContext(AuthContext);
   Alert.alert(
     'Warning!',
     'Are you sure ?',
@@ -15,14 +16,7 @@ const DeleteAction = ( props, itemObj, dataArr ) => {
       {
         text: 'YES',
         onPress: () => {
-          const newData = dataArr.filter( item => {
-            if ( item.id === itemObj.id ) {
-              alert( "Success Delete data" )
-              return false;
-            }
-            return true
-          } )
-          deleteData( newData );
+          deleteData( itemObj );
         }
       },
       ]

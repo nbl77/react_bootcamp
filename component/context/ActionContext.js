@@ -1,70 +1,87 @@
 import AsyncStorage from '@react-native-community/async-storage';
-const ActionStorage = ([state,dispatch]) =>(
-  {
+import {
+  createTableUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  getUsers,
+  getUser,
+  checkEmail,
+  checkEmailPass
+} from './sqlQuery';
+const ActionStorage = ([state,dispatch]) =>{
+  return{
+    setUser: async user => dispatch( {
+      type: "SET_USER",
+      payload: user
+    } ),
     restore: async token => dispatch( {
       type: "SIGN_IN",
       token: token
     } ),
     signIn: async data => {
-      const isLogged = state.user.some(item=>{
-        try {
-          AsyncStorage.setItem("token","Halo, belajar auth");
-          if (item.email === data.email && item.password === data.password) {
-            return true
-          }
-          return false;
-        } catch (e) {
-          console.log(e);
-          return false;
-        }
-
-      });
-      if (isLogged) {
+      const check = await checkEmailPass(data);
+      if (check < 1) {
+        alert("Email atau password salah");
+      }else {
+        await AsyncStorage.setItem("token","Halo, belajar auth");
         dispatch( {
           type: "SIGN_IN",
           token: "Halo, belajar auth"
         } )
-      }else{
-        alert("Email atau password yang anda masukan salah");
       }
     },
     signOut: async () => {
       try {
-  			AsyncStorage.removeItem("token");
+        AsyncStorage.removeItem("token");
         dispatch( {
           type: "SIGN_OUT"
         } )
-  		} catch (e) {
-  			console.log(e);
-  		}
+      } catch (e) {
+        console.log(e);
+      }
     },
     signUp: async data => {
-      dispatch( {
-        type: "SIGN_UP",
-        payload:data
-      } )
-      alert("Berhasil sign up, silahkan sign in");
+      const check = await checkEmail(data);
+      if (check > 1) {
+        alert("Email sudah digunakan");
+      }else {
+        await createUser(data);
+        dispatch( {
+          type: "ADD_DATA",
+          payload:data
+        } )
+        alert("Berhasil, silahkan sign in");
+      }
     },
     data: state.data,
-    addData: data =>{
-      dispatch({
-        type: "ADD_DATA",
-        payload: data
-      })
+    addData: async data =>{
+      const check = await checkEmail(data);
+      if (check > 1) {
+        alert("Email sudah digunakan");
+      }else {
+        await createUser(data);
+        dispatch( {
+          type: "ADD_DATA",
+          payload:data
+        } )
+      }
     },
-    editData: data =>{
+    editData: async data =>{
+      await updateUser(data);
       dispatch({
         type: "EDIT_DATA",
-        payload: data
+        payload: await getUsers()
       })
     },
-    deleteData: data =>{
+    deleteData: async data =>{
+      await deleteUser(data);
       dispatch({
         type: "DELETE_DATA",
-        payload: data
+        payload: await getUsers()
       })
     },
     token:state.userToken
   }
-)
+}
 export default ActionStorage;
