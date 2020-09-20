@@ -7,6 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Dashboard from './Dashboard';
 import Photos from './Albums/Photos';
 import Detail from './Home/Detail';
+import TakePicture from './TakePicture';
 import AuthContext from './context/AuthContext';
 import {
   getUsers
@@ -20,30 +21,41 @@ const Stack = createStackNavigator();
 
 function App() {
 	const {token,restore, setUser,data} = React.useContext(AuthContext)
+
+  const getToken = async ()=>{
+    try {
+      const token = await AsyncStorage.getItem("token")
+      if (token != null) {
+        restore(token)
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  const setDataUser = async () =>{
+    try {
+      const dataUsers = await getUsers();
+      setUser(dataUsers)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   React.useEffect(()=>{
-		const getToken = async ()=>{
-			try {
-				const token = await AsyncStorage.getItem("token")
-				if (token != null) {
-					restore(token)
-				}
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		const setDataUser = async () =>{
-			try {
-				const data = await getUsers();
-				setUser(data)
-			} catch (e) {
-				console.log(e);
-			}
-		}
 		if (data.length < 1) {
-			setDataUser();
+			(async ()=> {
+        await getToken();
+        await setDataUser()
+      })()
 		}
-		getToken();
   },[data])
+
+
+  if (data.length < 1) {
+    return (
+      <Text>Loading...</Text>
+    )
+  }
 	return (
 		<NavigationContainer>
 		{token === null ? ( //Jika belum login
@@ -58,7 +70,8 @@ function App() {
 				<Stack.Navigator>
 					<Stack.Screen name="home" component={Dashboard} options={({ route }) => (customHeader("Dashboard"))} />
 					<Stack.Screen name= "Photos" component = {Photos} options = {({route}) => ( subHeader() ) } />
-					<Stack.Screen name="Detail" options = {({route}) => ( customHeader( "Detail" ) ) } component={Detail} />
+          <Stack.Screen name="Detail" options = {({route}) => ( customHeader( "Detail" ) ) } component={Detail} />
+					<Stack.Screen name="TakePicture" options = {({route}) => ( customHeader( "Detail" ) ) } component={TakePicture} />
 				</Stack.Navigator >
 			</>
 		)}

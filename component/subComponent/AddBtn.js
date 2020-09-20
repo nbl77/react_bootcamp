@@ -6,7 +6,7 @@ import {
 const IconAdd = ( navigation ) => (
   <TopNavigationAction icon={props=>(<Icon {...props} name="plus-outline" fill="#fff" />)} onPress = {
     () => navigation.navigate( 'Detail', {
-    type: "Tambah"
+    typeData: "Tambah"
     })} />
 )
 export default IconAdd;

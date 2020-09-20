@@ -70,7 +70,7 @@ function HomeScreen( props ) {
 					description={`Users ${item.device}`}
 					accessoryLeft={()=>ItemImage(item.profile)}
 					accessoryRight={props=>deleteBtn(props,item,data)}
-					onPress={()=>props.navigation.navigate('Detail',{type:"Edit",dataItem:item})}
+					onPress={()=>props.navigation.navigate('Detail',{typeData:"Edit",dataItem:item})}
 					style={{borderBottomColor: "#eee",borderBottomWidth: 1}}
 					/>
 			))}

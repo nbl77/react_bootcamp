@@ -38,7 +38,6 @@ function Albums( props ) {
 			try {
 				const dataAlbums = await AsyncStorage.getItem("albums");
 				if (dataAlbums === null) {
-					console.log("masuk");
 					const fetchRes = await fetch("https://jsonplaceholder.typicode.com/albums")
 					const data = await fetchRes.json()
 					await AsyncStorage.setItem("albums",JSON.stringify(data))
